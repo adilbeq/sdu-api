@@ -28,6 +28,9 @@ app.post('/schedule', function (req, res) {
     await page.click('#divModule > table > tbody > tr:nth-child(2) > td:nth-child(2) > div > input[type=button]');
     await page.waitForSelector('#div_results > table > tbody > tr:nth-child(1) > td:nth-child(2)');
 
+    var table = 'td > span > a';
+    console.log(table);
+
     await page.screenshot({path: 'clickbd.png', fullPage: true});
 
     await browser.close();
