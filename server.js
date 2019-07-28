@@ -28,13 +28,13 @@ app.post('/schedule', function (req, res) {
     await page.click('#divModule > table > tbody > tr:nth-child(2) > td:nth-child(2) > div > input[type=button]');
     await page.waitForSelector('#div_results > table > tbody > tr:nth-child(1) > td:nth-child(2)');
 
-    var table = 'td > span > a';
-    console.log(table);
-
+    //var table = '#div_results > table > tbody';
+    var table = await page.evaluate(() => document.querySelectorAll('#div_results > table > tbody > tr').outerHTML);
+    var
     await page.screenshot({path: 'clickbd.png', fullPage: true});
 
     await browser.close();
-    res.send(200);
+    res.send(table);
   })();
 });
 
