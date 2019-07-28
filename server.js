@@ -7,7 +7,7 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 app.use(cors());
 
-app.post('/login', function (req, res) {
+app.post('/schedule', function (req, res) {
   const puppeteer = require('puppeteer');
   (async () => {
     const browser = await puppeteer.launch();
@@ -22,12 +22,12 @@ app.post('/login', function (req, res) {
     
     const submitBtn = "div > form > input";
     await page.click(submitBtn);
-
-
-    // var clickContinue2 = "body > div > div > table > tbody > tr:nth-child(2) > td:nth-child(1) > div > div:nth-child(7) > a";
-    // await page.click(clickContinue2);
     await page.goto('https://my.sdu.edu.kz/index.php?mod=schedule', {waitUntil: 'networkidle2', headless: false});
     
+    await page.select('#ysem', '2018#2');
+    await page.click('#divModule > table > tbody > tr:nth-child(2) > td:nth-child(2) > div > input[type=button]');
+    await page.waitForSelector('#div_results > table > tbody > tr:nth-child(1) > td:nth-child(2)');
+
     await page.screenshot({path: 'clickbd.png', fullPage: true});
 
     await browser.close();
