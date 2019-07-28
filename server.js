@@ -12,7 +12,8 @@ app.post('/login', function (req, res) {
   (async () => {
     const browser = await puppeteer.launch();
     const page = await browser.newPage();
-    await page.goto('https://my.sdu.edu.kz/index.php', {waitUntil: 'networkidle2', headless: true});
+    await page.setViewport({width:1366, height:1000}); 
+    await page.goto('https://my.sdu.edu.kz/index.php', {waitUntil: 'networkidle2', headless: false});
     await page.waitForSelector('#username');
     const username = '#username';
     await page.$eval(username, (el, value) => el.value = value, req.body.username);
@@ -21,7 +22,13 @@ app.post('/login', function (req, res) {
     
     const submitBtn = "div > form > input";
     await page.click(submitBtn);
-    await page.screenshot({path: 'clickbd.png',fullPage: true});
+
+
+    // var clickContinue2 = "body > div > div > table > tbody > tr:nth-child(2) > td:nth-child(1) > div > div:nth-child(7) > a";
+    // await page.click(clickContinue2);
+    await page.goto('https://my.sdu.edu.kz/index.php?mod=schedule', {waitUntil: 'networkidle2', headless: false});
+    
+    await page.screenshot({path: 'clickbd.png', fullPage: true});
 
     await browser.close();
     res.send(200);
