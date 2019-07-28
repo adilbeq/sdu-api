@@ -27,30 +27,10 @@ app.post('/schedule', function (req, res) {
     await page.select('#ysem', '2018#2');
     await page.click('#divModule > table > tbody > tr:nth-child(2) > td:nth-child(2) > div > input[type=button]');
     await page.waitForSelector('#div_results > table > tbody > tr:nth-child(1) > td:nth-child(2)');
-
-    //var table = '#div_results > table > tbody';
-    // var table = await page.evaluate(() => {
-    //   //var temp = document.querySelectorAll('#div_results > table > tbody > tr > td > span');
-    //   var tab = document.querySelector("#div_results > table");
-    //   for (var i = 0, row; row = tab.rows[i]; i++) {
-    //     for (var j = 0, col; col = row.cells[j]; j++) {
-    //       console.log(tab[col][row]);
-    //     }  
-    //  }
-    //   return tab;
-    // });
-    //console.log(table);
-
     const data = await page.evaluate(() => {
       const tds = Array.from(document.querySelectorAll('#div_results > table > tbody > tr > td > span'));
       return tds.map(td => td.innerText);
     });
-
-    // for(var i=0; i<data.length; i++){
-    //   if(data[i] != ""){
-    //     console.log(data[i]);
-    //   }
-    // }
 
     const jso = {
       "mo" : [
@@ -134,8 +114,6 @@ app.post('/schedule', function (req, res) {
         {"22:00" : data[116]}
       ]
     }
-
-
     //await page.screenshot({path: 'clickbd.png', fullPage: true});
 
     await browser.close();
