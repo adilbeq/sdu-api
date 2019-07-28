@@ -3,11 +3,11 @@ var app = express();
 var cors = require('cors');
 var bodyParser = require('body-parser');
 
-app.use(bodyParser.urlencoded({ extended: false }))
-app.use(bodyParser.json())
-app.use(cors())
+app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.json());
+app.use(cors());
 
-app.post('/grades', function (req, res) {
+app.post('/login', function (req, res) {
   const puppeteer = require('puppeteer');
   (async () => {
     const browser = await puppeteer.launch();
@@ -18,7 +18,7 @@ app.post('/grades', function (req, res) {
     await page.$eval(username, (el, value) => el.value = value, req.body.username);
     const password = '#password';
     await page.$eval(password, (el, value) => el.value = value, req.body.password);
-      
+    
     const submitBtn = "div > form > input";
     await page.click(submitBtn);
     await page.screenshot({path: 'clickbd.png',fullPage: true});
